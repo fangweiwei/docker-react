@@ -3,8 +3,22 @@ sudo: required
 services:
   - docker
 
-before_install:
+before_install: 
   - docker build -t jackfang/docker-react -f Dockerfile.dev .
 
-scripts:
+script: 
   - docker123 run jackfang/docker-react npm run test -- --coverage
+
+deploy: 
+  provider: elasticbeanstalk
+  region: "us-west-2"
+  app: "docker-react"
+  env: "Docker-env"
+  bucket_name: "elasticbeanstalk-us-west-2-asdf2234234234"
+  bucket_name: "docker"
+  on: 
+    branch: master
+  access_key_id: "$aws_access_key"
+  secret_access_key: 
+    secure: "$AWS_SECRET_KEY"
+
